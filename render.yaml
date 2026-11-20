@@ -1,0 +1,64 @@
+services:
+  - type: web
+    name: mps-erp
+    runtime: docker
+    region: frankfurt
+    plan: free
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: My Perfect Stitch
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        fromService:
+          name: mps-erp
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: ASSET_URL
+        fromService:
+          name: mps-erp
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: APP_TIMEZONE
+        value: Africa/Lusaka
+      - key: FORCE_HTTPS
+        value: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        fromDatabase:
+          name: mps-erp-db
+          property: connectionString
+      - key: DB_SSLMODE
+        value: require
+      - key: CACHE_STORE
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: info
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: SEED_DEMO_DATA
+        value: false
+      - key: SEED_RESET_PASSWORDS
+        value: false
+      - key: MAIL_MAILER
+        value: log
+
+databases:
+  - name: mps-erp-db
+    plan: free
+    region: frankfurt
+    postgresMajorVersion: '17'
+    databaseName: mps_erp
+    user: mps_erp
