@@ -8,6 +8,7 @@
             <h1 class="page-title">🧾 Smart Invoicing</h1>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="{{ route('invoicing.quote-builder.create') }}" class="btn-outline">⚡ Advanced Quote Builder</a>
             <a href="{{ route('invoicing.quotes.create') }}" class="btn-outline">+ New Quote</a>
             <a href="{{ route('invoicing.create') }}" class="btn-gold">+ New Invoice</a>
         </div>

@@ -1,10 +1,15 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 @section('title', $type === 'quote' ? 'New Quote' : 'New Invoice')
 @section('content')
 <div class="page-header">
     <div class="page-header-inner">
-        <div><div class="page-subtitle">Smart Invoicing</div><h1 class="page-title">🧾 {{ $type === 'quote' ? 'New Quote' : 'New Invoice' }}</h1></div>
-        <a href="{{ route('invoicing.index') }}" class="btn-outline">← All Invoices</a>
+        <div><div class="page-subtitle">Smart Invoicing</div><h1 class="page-title">{{ $type === 'quote' ? 'New Quote' : 'New Invoice' }}</h1></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            @if(($type ?? 'invoice') === 'quote')
+            <a href="{{ route('invoicing.quote-builder.create') }}" class="btn-outline">Advanced Quote Builder</a>
+            @endif
+            <a href="{{ route('invoicing.index') }}" class="btn-outline">All Invoices</a>
+        </div>
     </div>
 </div>
 <div class="page-body" style="max-width:1000px;">
@@ -14,3 +19,4 @@
     @include('invoicing._form', ['invoice' => null, 'clients' => $clients, 'type' => $type])
 </div>
 @endsection
+

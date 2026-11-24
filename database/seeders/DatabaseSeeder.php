@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             DepartmentUserSeeder::class,
             ChartOfAccountsSeeder::class,
             SettingsSeeder::class,
+            QuoteBuilderSeeder::class,
         ]);
 
         if (app()->environment('local') || config('app.seed_demo_data')) {

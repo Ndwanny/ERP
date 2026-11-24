@@ -16,9 +16,12 @@ $badge = ['draft'=>'badge-muted','sent'=>'badge-gold','viewed'=>'badge-navy','pa
             </div>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a href="{{ route('invoicing.index') }}" class="btn-outline">← All Invoices</a>
-            <a href="{{ route('invoicing.pdf', $invoice) }}" target="_blank" class="btn-outline">🖨 Print</a>
-            <a href="{{ route('invoicing.pdf', $invoice, ['download' => 1]) }}" class="btn-outline">⬇ Download</a>
+            <a href="{{ route('invoicing.index') }}" class="btn-outline">�+? All Invoices</a>
+            <a href="{{ route('invoicing.pdf', $invoice) }}" target="_blank" class="btn-outline">dY-" Print</a>
+            <a href="{{ route('invoicing.pdf', $invoice, ['download' => 1]) }}" class="btn-outline">��� Download</a>
+            @if($invoice->type === 'quote' && data_get($invoice->meta, 'builder') === 'advanced_quote_builder_v1')
+            <a href="{{ route('invoicing.quote-builder.edit', $invoice) }}" class="btn-outline">Advanced Builder</a>
+            @endif
             <a href="{{ route('invoicing.edit', $invoice) }}" class="btn-outline">Edit</a>
         </div>
     </div>

@@ -13,12 +13,13 @@ class Invoice extends Model
         'invoice_number', 'client_id', 'created_by', 'type', 'status', 'vertical',
         'issue_date', 'due_date', 'subtotal', 'discount_percent', 'discount_amount',
         'tax_percent', 'tax_amount', 'total', 'amount_paid', 'balance_due',
-        'currency', 'notes', 'terms', 'sent_at', 'paid_at',
+        'currency', 'notes', 'terms', 'meta', 'sent_at', 'paid_at',
     ];
 
     protected $casts = [
         'issue_date' => 'date', 'due_date' => 'date',
         'sent_at' => 'datetime', 'paid_at' => 'datetime',
+        'meta' => 'array',
     ];
 
     public function client()

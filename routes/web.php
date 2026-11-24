@@ -13,6 +13,7 @@ use App\Http\Controllers\InvoicingController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\QuoteBuilderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [InvoicingController::class, 'index'])->name('index');
         Route::get('/create', [InvoicingController::class, 'create'])->name('create');
         Route::post('/', [InvoicingController::class, 'store'])->name('store');
+        Route::get('/quotes/create', [InvoicingController::class, 'createQuote'])->name('quotes.create');
+        Route::get('/quote-builder', [QuoteBuilderController::class, 'create'])->name('quote-builder.create');
+        Route::post('/quote-builder', [QuoteBuilderController::class, 'store'])->name('quote-builder.store');
+        Route::get('/quote-builder/{invoice}/edit', [QuoteBuilderController::class, 'edit'])->name('quote-builder.edit');
+        Route::put('/quote-builder/{invoice}', [QuoteBuilderController::class, 'update'])->name('quote-builder.update');
         Route::get('/{invoice}', [InvoicingController::class, 'show'])->name('show');
         Route::get('/{invoice}/edit', [InvoicingController::class, 'edit'])->name('edit');
         Route::put('/{invoice}', [InvoicingController::class, 'update'])->name('update');
@@ -44,7 +50,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/{invoice}/send', [InvoicingController::class, 'send'])->name('send');
         Route::get('/{invoice}/pdf', [InvoicingController::class, 'generatePdf'])->name('pdf');
         Route::post('/{invoice}/mark-paid', [InvoicingController::class, 'markPaid'])->name('mark-paid');
-        Route::get('/quotes/create', [InvoicingController::class, 'createQuote'])->name('quotes.create');
     });
 
     // ── 02. Order & Production ──────────────────────────────────────────────
