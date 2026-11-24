@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             QuoteBuilderSeeder::class,
         ]);
 
-        if (app()->environment('local') || config('app.seed_demo_data')) {
+        if (config('app.seed_demo_data')) {
             $this->call(DemoDataSeeder::class);
         }
     }

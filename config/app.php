@@ -56,7 +56,7 @@ return [
 
     'force_https' => (bool) env('FORCE_HTTPS', false),
 
-    'seed_demo_data' => (bool) env('SEED_DEMO_DATA', false),
+    'seed_demo_data' => (bool) env('SEED_DEMO_DATA', env('APP_ENV', 'production') === 'local'),
 
     'seed_reset_passwords' => (bool) env('SEED_RESET_PASSWORDS', false),
 

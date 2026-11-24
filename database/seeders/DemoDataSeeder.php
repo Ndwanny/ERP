@@ -44,7 +44,7 @@ class DemoDataSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->environment('local') && ! config('app.seed_demo_data')) {
+        if (! config('app.seed_demo_data')) {
             return;
         }
 
@@ -715,6 +715,7 @@ class DemoDataSeeder extends Seeder
                     'recorded_by' => $finance->id,
                     'supplier_id' => $e[1] ? $suppliers[$e[1]]->id : null,
                     'account_id' => $this->account($e[2])->id,
+                    'title' => $e[0],
                     'description' => 'Local demo expense.',
                     'amount' => $e[3],
                     'currency' => 'ZMW',
