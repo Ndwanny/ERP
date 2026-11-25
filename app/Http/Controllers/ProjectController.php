@@ -61,7 +61,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $project->load(['client', 'manager', 'milestones' => fn ($q) => $q->orderBy('sort_order'), 'contractors', 'siteVisits' => fn ($q) => $q->with('user')->latest()]);
-        $users = User::where('is_active', true)->orderBy('name')->get(['id', 'name']);
+        $users = User::where('is_active', true)->orderBy('first_name')->get(['id', 'first_name', 'last_name']);
 
         return view('projects.show', compact('project', 'users'));
     }

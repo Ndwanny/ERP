@@ -48,7 +48,7 @@ class ProductionController extends Controller
     public function create()
     {
         $clients = Client::orderBy('name')->get(['id', 'name', 'company']);
-        $users = User::where('is_active', true)->orderBy('first_name')->get(['id', 'name']);
+        $users = User::where('is_active', true)->orderBy('first_name')->get(['id', 'first_name', 'last_name']);
         $invoices = Invoice::orderByDesc('issue_date')->limit(100)->get(['id', 'invoice_number', 'client_id']);
         $materials = InventoryItem::orderBy('name')->get(['id', 'name', 'sku', 'unit', 'quantity']);
 
@@ -113,7 +113,7 @@ class ProductionController extends Controller
     public function show(ProductionOrder $order)
     {
         $order->load(['client', 'invoice', 'assignedTo', 'stageLogs' => fn ($q) => $q->latest()]);
-        $users = User::where('is_active', true)->orderBy('first_name')->get(['id', 'name']);
+        $users = User::where('is_active', true)->orderBy('first_name')->get(['id', 'first_name', 'last_name']);
 
         return view('production.show', compact('order', 'users'));
     }
