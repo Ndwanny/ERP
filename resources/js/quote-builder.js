@@ -15,12 +15,13 @@
   function numSetting(key){
     const v = Number(settings[key]);
     if (Number.isFinite(v)) return v;
-    throw new Error(`Missing quote setting: ${key}`);
+    return null;
   }
   function cbRates(){
     const labour = numSetting('quote_cb_labour');
     const sal = numSetting('quote_cb_sal_oh');
     const fac = numSetting('quote_cb_fac_oh');
+    if ([labour, sal, fac].some(v => v === null)) return null;
     return { labour, sal, fac, combined: labour + sal + fac };
   }
   function calcLine(line){
@@ -71,13 +72,8 @@
     const card = byId('costBreakCard');
     if(!card) return;
     if(!t.lines.length){ card.style.display='none'; return; }
-    card.style.display='block';
-    const rates = cbRates();
-    byId('cbRateLab').textContent = rates.labour.toFixed(4);
-    byId('cbRateSal').textContent = rates.sal.toFixed(4);
-    byId('cbRateFac').textContent = rates.fac.toFixed(4);
-    byId('cbTotPct').textContent = totPercent;
 
+    const rates = cbRates();
     const monthlyCap = numSetting('quote_monthly_capacity_mins');
     const monthlyFixed = numSetting('quote_monthly_fixed');
     const totalMachinists = numSetting('quote_total_machinists');
@@ -85,6 +81,19 @@
     const shiftHrs = numSetting('quote_shift_hours');
     const shiftEff = numSetting('quote_shift_efficiency');
     const totPercent = numSetting('quote_tot_percent');
+    const required = [rates, monthlyCap, monthlyFixed, totalMachinists, workDays, shiftHrs, shiftEff, totPercent];
+    if (required.some(v => v === null || v === undefined || Number.isNaN(v))) {
+      card.style.display = 'block';
+      byId('capBanner').innerHTML = `<div style="padding:12px;background:var(--qb-g1);border-radius:8px;font-size:12px;color:var(--qb-g4)">Cost & Profit Distribution is unavailable because required quote settings are missing. Configure quote capacity/cost/TOT settings in the database.</div>`;
+      byId('cbBar').innerHTML = ''; byId('cbLegend').innerHTML = ''; byId('cbStats').innerHTML = ''; byId('cbTable').innerHTML = '';
+      byId('cbRateLab').textContent = '—'; byId('cbRateSal').textContent = '—'; byId('cbRateFac').textContent = '—'; byId('cbTotPct').textContent = '—';
+      return;
+    }
+    card.style.display='block';
+    byId('cbRateLab').textContent = rates.labour.toFixed(4);
+    byId('cbRateSal').textContent = rates.sal.toFixed(4);
+    byId('cbRateFac').textContent = rates.fac.toFixed(4);
+    byId('cbTotPct').textContent = totPercent;
     const quoteMins = t.lines.reduce((s,l)=>s + (l.minutesTotal||0), 0);
     const capPct = monthlyCap>0 ? Math.min(100, (quoteMins/monthlyCap*100)) : 0;
     const capPctFmt = capPct.toFixed(1);
