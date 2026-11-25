@@ -40,7 +40,8 @@
     const ch = map[line.channel] || map.retail; if (ch.price===null) return {...line, error:'Not employee eligible'};
     const base = ch.price, unit = base*(1-discPct/100), subtotal = unit*qty, lineCost=ch.cost*qty, margin=subtotal-lineCost;
     const mins = Math.max(0, +p.production_minutes || 0);
-    const otPremium = line.overtime ? (mins * cbRates().labour * ((+settings[line.ot_type==='sunday'?'quote_ot_sunday':'quote_ot_weekday'] || (line.ot_type==='sunday'?2:1.5)) - 1) * qty) : 0;
+    const otMult = line.overtime ? numSetting(line.ot_type==='sunday' ? 'quote_ot_sunday' : 'quote_ot_weekday') : 1;
+    const otPremium = line.overtime ? (mins * cbRates().labour * (otMult - 1) * qty) : 0;
     return {...line, product:p, qty, base, unit, subtotal, margin, marginPct:subtotal>0?(margin/subtotal*100):0, lineCost, channelLabel:ch.label, brandingMeta:b, otPremium, minutesTotal: mins*qty};
   }
   function totals(){
@@ -49,7 +50,7 @@
     const docDiscPct = Math.max(0, Math.min(100, +byId('discount_percent').value||0));
     const docDisc = subtotal * docDiscPct/100;
     const taxable = subtotal - docDisc;
-    const vatPct = Math.max(0, Math.min(100, +byId('tax_percent').value||+settings.quote_vat_percent||16));
+    const vatPct = Math.max(0, Math.min(100, +byId('tax_percent').value||numSetting('quote_vat_percent')));
     const vat = taxable * vatPct/100;
     const total = taxable + vat;
     const cost = lines.reduce((s,l)=>s+(l.lineCost||0),0);
@@ -204,9 +205,9 @@
     form.querySelector('[name=_method]').value = cfg.invoice ? 'PUT' : 'POST';
     form.querySelectorAll('input[data-dyn]').forEach(n=>n.remove());
     const set=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v==null?'':String(v);i.dataset.dyn='1';form.appendChild(i);};
-    set('client_id',byId('client_id').value); set('issue_date',byId('issue_date').value); set('valid_days',byId('valid_days').value||30); set('due_date',byId('due_date').value);
+    set('client_id',byId('client_id').value); set('issue_date',byId('issue_date').value); set('valid_days',byId('valid_days').value||numSetting('quote_default_valid_days')); set('due_date',byId('due_date').value);
     set('currency',byId('currency').value||'ZMW'); set('vertical',byId('vertical').value); set('notes',byId('notes').value); set('terms',byId('terms').value);
-    set('lead_time',byId('lead_time').value); set('prepared_by',byId('prepared_by').value); set('discount_percent',byId('discount_percent').value||0); set('tax_percent',byId('tax_percent').value||+settings.quote_vat_percent||16);
+    set('lead_time',byId('lead_time').value); set('prepared_by',byId('prepared_by').value); set('discount_percent',byId('discount_percent').value||0); set('tax_percent',byId('tax_percent').value||numSetting('quote_vat_percent'));
     state.lines.forEach((l,idx)=>{ ['product_id','quantity','channel','branding','payment_days','rush','manual_discount_percent','strategic_discount_percent'].forEach(k=>set(`items[${idx}][${k}]`, k==='rush' ? (l[k]?1:0) : l[k])); });
     form.submit();
   }
@@ -218,8 +219,8 @@
   byId('discount_percent').addEventListener('input', renderLines); byId('tax_percent').addEventListener('input', renderLines);
   renderProducts(); renderOverview(); renderLines();
   byId('issue_date').value = cfg.invoice?.issue_date || new Date().toISOString().slice(0,10);
-  byId('valid_days').value = cfg.invoice?.valid_days || settings.quote_default_valid_days || 30;
-  byId('tax_percent').value = cfg.invoice?.tax_percent ?? settings.quote_vat_percent ?? 16;
-  byId('terms').value = cfg.invoice?.terms || settings.quote_default_terms || '';
+  byId('valid_days').value = cfg.invoice?.valid_days || numSetting('quote_default_valid_days');
+  byId('tax_percent').value = cfg.invoice?.tax_percent ?? numSetting('quote_vat_percent');
+  byId('terms').value = cfg.invoice?.terms || (settings.quote_default_terms ?? '');
   if(cfg.invoice){ byId('client_id').value=cfg.invoice.client_id||''; byId('due_date').value=cfg.invoice.due_date||''; byId('currency').value=cfg.invoice.currency||'ZMW'; byId('vertical').value=cfg.invoice.vertical||''; byId('notes').value=cfg.invoice.notes||''; byId('lead_time').value=cfg.invoice.lead_time||''; byId('prepared_by').value=cfg.invoice.prepared_by||''; byId('discount_percent').value=cfg.invoice.discount_percent||0; renderLines(); }
 })();
