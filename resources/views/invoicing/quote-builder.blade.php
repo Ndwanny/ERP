@@ -87,6 +87,23 @@
           <div class="card" style="margin-top:14px"><div class="sec">Internal margin summary</div><div id="marginSummary"></div></div>
         </div>
       </div>
+
+      <div id="costBreakCard" class="no-print" style="display:none;margin-top:14px">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap">
+            <div class="sec" style="margin:0;border:none;padding:0">Cost &amp; Profit Distribution</div>
+            <span style="font-size:10px;color:var(--qb-g3);background:var(--qb-g1);padding:2px 8px;border-radius:10px">Internal use only · not shown on client quote</span>
+          </div>
+          <div id="capBanner" style="margin-bottom:12px"></div>
+          <div class="cb-bar" id="cbBar"></div>
+          <div class="cb-legend" id="cbLegend"></div>
+          <div class="cb-stats" id="cbStats"></div>
+          <div style="overflow-x:auto"><table class="cb-tbl" id="cbTable"></table></div>
+          <div style="font-size:10px;color:var(--qb-g3);margin-top:8px">
+            Rates: <strong style="color:#1D9E75">Direct Labour</strong> K<span id="cbRateLab"></span>/min · <strong style="color:#C49B3C">Salaries</strong> K<span id="cbRateSal"></span>/min · <strong style="color:#4A9B7F">Facility &amp; Ops</strong> K<span id="cbRateFac"></span>/min · Materials = cost − labour − overhead. <strong style="color:#C0392B">TOT (<span id="cbTotPct"></span>%)</strong> = Turnover Tax to ZRA. <strong style="color:#E67E22">VAT</strong> = collected from client, remitted to ZRA (pass-through).
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="pane" id="p-sales">

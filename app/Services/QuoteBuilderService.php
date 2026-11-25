@@ -34,7 +34,8 @@ class QuoteBuilderService
             'quote_brand_leather_patch_cost' => 80.0, 'quote_brand_leather_patch_setup' => 300.0,
             'quote_vol_tier_1' => 0.0, 'quote_vol_tier_2' => 2.5, 'quote_vol_tier_3' => 5.0, 'quote_vol_tier_4' => 10.0,
             'quote_mins_per_day' => 2520, 'quote_brand_days' => 2, 'quote_monthly_capacity_mins' => 79200, 'quote_monthly_fixed' => 111586.0,
-            'quote_cb_labour' => 0.4116, 'quote_cb_sal_oh' => 0.4000, 'quote_cb_fac_oh' => 0.5973,
+            'quote_total_machinists' => 10, 'quote_work_days_month' => 22, 'quote_shift_hours' => 8.0, 'quote_shift_efficiency' => 0.75,
+            'quote_cb_labour' => 0.4116, 'quote_cb_sal_oh' => 0.4000, 'quote_cb_fac_oh' => 0.5973, 'quote_tot_percent' => 5.0,
             'quote_default_valid_days' => 30,
             'quote_default_terms' => 'Payment due as agreed. Prices exclude delivery unless stated. VAT charged at prevailing ZRA rate.',
         ];

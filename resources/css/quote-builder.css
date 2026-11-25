@@ -28,6 +28,19 @@
 .qb .gm-hi{color:var(--qb-teal);font-size:11px}.qb .gm-mid{color:var(--qb-amber);font-size:11px}.qb .gm-lo{color:var(--qb-red);font-size:11px;font-weight:600}
 .qb .chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
 .qb .chip-g{background:#E1F5EE;color:#0F6E56}.qb .chip-a{background:#FAEEDA;color:#854F0B}.qb .chip-r{background:#FCEBEB;color:#791F1F}.qb .chip-n{background:#F1EFE8;color:#444441}
+.qb .cb-bar{height:20px;border-radius:4px;overflow:hidden;display:flex;margin:8px 0 4px;background:var(--qb-g1)}
+.qb .cb-seg{height:100%;transition:width .3s;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:rgba(255,255,255,.92);overflow:hidden;white-space:nowrap}
+.qb .cb-legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11px;margin-bottom:12px;color:var(--qb-g4)}
+.qb .cb-dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px;flex-shrink:0;vertical-align:middle}
+.qb .cb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px}
+.qb .cb-stat{background:var(--qb-g1);border-radius:8px;padding:8px;text-align:center}
+.qb .cb-stat-val{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.qb .cb-stat-lbl{font-size:9px;color:var(--qb-g3);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+.qb .cb-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.qb .cb-tbl th,.qb .cb-tbl td{padding:7px 6px;border-bottom:1px solid var(--qb-g1);text-align:left}
+.qb .cb-tbl th{font-size:10px;color:var(--qb-g3);text-transform:uppercase;letter-spacing:.04em;font-weight:700;background:#fff}
+.qb .cb-tbl .r{text-align:right;font-variant-numeric:tabular-nums}
+.qb .cb-tbl .tot td{font-weight:700;border-top:2px solid var(--qb-g2);border-bottom:none;background:#fafbfd}
 .qb .sq-wrap{background:#fff;border:1px solid var(--qb-g2);padding:28px;max-width:860px;margin:0 auto}
 .qb .sq-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--qb-navy);padding-bottom:16px;margin-bottom:18px}
 .qb .sq-tbl th{background:var(--qb-navy);color:#fff;font-size:10px;padding:7px 10px;text-align:left}
